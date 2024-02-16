@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import './App.css';
-import HelloComponent from './components/HelloComponent';
-import api from './services/api';
+import axios from 'axios';
 
-function App() {
+export default function HelloComponent() {
   const [data, setData] = useState({});
+
   useEffect(() => {
     // api
     //   .get('/hello')
@@ -12,7 +11,7 @@ function App() {
     //   .catch((err) => console.error(err));
     const fetchData = async () => {
       try {
-        const response = await api.get('/hello');
+        const response = await axios.get('http://localhost:8080/hello');
         setData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error.message);
@@ -21,13 +20,25 @@ function App() {
 
     fetchData();
     console.log(data.content);
+    // console.log(data.data.content);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <>
-      <HelloComponent />
-    </>
+    <div>
+      {' '}
+      <h1>{data.content}</h1>
+      {/* <h1>Hello, World</h1> */}
+      {/* <div>
+        <h1>Hello World with Axios</h1>
+        {data && (
+          <div>
+            <h2>Data from API:</h2>
+            <p>
+              ID: {data.id}, Content: {data.content}
+            </p>
+          </div>
+        )} */}
+    </div>
+    // </div>
   );
 }
-
-export default App;
